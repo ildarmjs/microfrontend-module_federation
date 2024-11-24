@@ -26,6 +26,22 @@ module.exports = {
 	plugins: [
 		new htmlWebpackPlugin({
 			template: './public/index.html'
+		}),
+		new ModuleFederationPlugin({
+			name: 'project',
+			filename: 'remoteEntry.js',
+			exposes: {
+				'./App': './src/App',
+				'./utils/sum': './src/utils/sum.js'
+			},
+			shared: {
+				react: {
+					singleton: true
+				},
+				'react-dom': {
+					singleton: true
+				}
+			}
 		})
 	],
 	resolve: {

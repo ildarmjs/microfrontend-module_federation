@@ -1,6 +1,6 @@
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
-
+const { ModuleFederationPlugin } = require('webpack').container
 module.exports = {
 	entry: './src/index.js',
 	mode: 'development',
@@ -25,6 +25,12 @@ module.exports = {
 	plugins: [
 		new htmlWebpackPlugin({
 			template: './public/index.html'
+		}),
+		new ModuleFederationPlugin({
+			name: 'app',
+			remotes: {
+				project: 'project@http://localhost:3001/remoteEntry.js'
+			}
 		})
 	],
 	resolve: {
